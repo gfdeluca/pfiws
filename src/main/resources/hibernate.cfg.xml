@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory>
+		<property name="connection.url">jdbc:mysql://localhost:3306/pfi?createDatabaseIfNotExist=true</property>
+		<property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+
+		<property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+
+		<property name="connection.username">guido</property>
+		<property name="connection.password">pAssw0rd</property>
+		<!-- DB schema will be updated if needed -->
+		<property name="hbm2ddl.auto">update</property>
+		<property name="show_sql">false</property>
+		<property name="format_sql">false</property>
+<!-- 		<property name="hibernate.hbm2ddl.import_files">/import.sql</property> -->
+
+		<property name="hibernate.bytecode.use_reflection_optimizer">true</property>
+<!-- 		<property name="hibernate.cache.use_query_cache">true</property> -->
+		<property name="hibernate.order_updates">true</property>
+		<property name="hibernate.transaction.flush_before_completion">true</property>
+		<property name="hibernate.transaction.auto_close_session">true</property>
+
+		<mapping class="ar.com.uade.pfi.dao.dbo.entities.AppConfigurationEntity"></mapping>
+		<mapping class="ar.com.uade.pfi.dao.dbo.entities.GlobalEntity"></mapping>
+		<mapping class="ar.com.uade.pfi.dao.dbo.entities.CodonEntity"></mapping>
+		<mapping class="ar.com.uade.pfi.dao.dbo.entities.OrganismEntity"></mapping>
+		<mapping class="ar.com.uade.pfi.dao.dbo.entities.OrganismPoblationEntity"></mapping>
+		<mapping class="ar.com.uade.pfi.dao.dbo.entities.ExperimentalCodonPoblationEntity"></mapping>
+		<mapping class="ar.com.uade.pfi.dao.dbo.entities.CalculatedCodonPoblationEntity"></mapping>
+	</session-factory>
+</hibernate-configuration>

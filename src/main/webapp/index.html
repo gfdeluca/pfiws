@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>PFI</title>
+		<link
+			href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+			rel="stylesheet"
+			integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+			crossorigin="anonymous">
+			
+		<link href="css/main.css" rel="stylesheet">
+		<link href="css/selector.css" rel="stylesheet">
+		
+		<script
+			src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
+		<script src="http://code.jquery.com/jquery-3.1.1.slim.min.js"
+			integrity="sha256-/SIrNqv8h6QGKDuNoLGA4iret+kyesCkHGzVUUV0shc="
+			crossorigin="anonymous"></script>
+		<script
+			src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+			integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+			crossorigin="anonymous"></script>
+			
+		<script type="text/javascript" src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+		<script type="text/javascript" src="js/canvasjs.min.js"></script>
+		<script type="text/javascript" src="js/directives.js"></script>
+		<script type="text/javascript" src="js/services.js"></script>
+	</head>
+
+	<body ng-app="pfi">
+		<div ng-controller="ModalController">
+			<modal visible="showModal2" backdrop="static">
+	            <modal-header title="Procesando..."></modal-header>
+	            <modal-body>
+	            	<div class="container-fluid">
+		            	<p>Por favor espere. Se estan calculando nuevos valores</p>
+						<div class="progress">
+						  	<div class="progress-bar progress-bar-striped active" role="progressbar"
+						  		aria-valuenow="{{percentage}}" aria-valuemin="0" aria-valuemax="100" 
+						  		style="width:{{percentage | number:2}}%">
+						    	{{percentage | number:0}}%
+						  	</div>
+						</div>
+					</div>
+	            </modal-body>
+	            <modal-footer>
+	            </modal-footer>
+	        </modal>
+		</div>
+		<nav class="navbar navbar-inverse navbar-default navbar-fixed-top" ng-controller="General">
+			<ul class="nav navbar-nav navbar-right" style="padding-right: 40px">
+				<li>
+					<button type="button" class="btn btn-default navbar-btn"
+						ng-click="processData()">
+						<span class="glyphicon glyphicon-refresh"></span> Procesar
+					</button>
+				</li>
+	<!-- 			<li> -->
+	<!-- 				<button type="button" class="btn btn-default navbar-btn" -->
+	<!-- 					ng-click="getBestR()" data-toggle="modal" data-target="#myModal2"> -->
+	<!-- 					<span class="glyphicon glyphicon-refresh"></span> Mejor Gamma -->
+	<!-- 				</button> -->
+	<!-- 			</li> -->
+			</ul>
+		</nav>
+		<div class="container-fluid" ng-controller="Selectores">
+			<div class="row">
+				<ng-include src="'modules/organismSelector.html'"></ng-include>
+				<div class="col-md-9" ng-if="selectedOrganism">
+					<div class="row">
+						<ng-include src="'modules/information.html'"></ng-include>
+					</div>
+					<div class="row">
+						<ng-include src="'modules/graph.html'"></ng-include>
+					</div>
+				</div>
+				<div class="col-md-9" ng-if="!selectedOrganism">
+					<h3>Para comenzar seleccione un organismo</h3>
+				</div>
+			</div>
+			<div id="myModal" class="modal fade" role="dialog">
+				<ng-include src="'modules/organismEnergyTable.html'"></ng-include>
+			</div>
+			<div id="myModal2" class="modal fade" role="dialog">
+				<ng-include src="'modules/absPearson.html'"></ng-include>
+			</div>
+		</div>
+		
+	</body>
+</html>
