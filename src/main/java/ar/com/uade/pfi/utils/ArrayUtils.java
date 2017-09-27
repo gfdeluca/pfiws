@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ar.com.uade.pfi.dao.dbo.entities.ExperimentalCodonPoblationEntity;
+import ar.com.uade.pfi.lang.Constants;
 
 public class ArrayUtils {
 	public static double[] poblationsLnToArray(List<ExperimentalCodonPoblationEntity> arrEcp) {
@@ -25,5 +26,19 @@ public class ArrayUtils {
 		}
 		
 		return output;
+	}
+	
+	public static Object[] calculateGammaPresicion(double init, double end, double step) {
+		int size = (int) (end/init);
+		double increment = (size/Constants.resultQuantity) * step;
+		
+		Object[] res = new Object[size];
+		double gamma = init;
+		for (int i = 0; i < Constants.resultQuantity; i++) {
+			res[i] = gamma;
+			gamma += increment;
+		}
+		
+		return res;
 	}
 }

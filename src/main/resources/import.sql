@@ -1,5 +1,109 @@
+# Volcado de tabla AppConfiguration
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `AppConfiguration`;
+
+CREATE TABLE `AppConfiguration` (
+  `clave` varchar(255) NOT NULL,
+  `valor` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`clave`)
+) ENGINE=Aria DEFAULT CHARSET=latin1;
+
+# Volcado de tabla CalculatedCodonsPoblations
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `CalculatedCodonsPoblations`;
+
+CREATE TABLE `CalculatedCodonsPoblations` (
+  `idCalculatedCodonPoblation` bigint zerofill NOT NULL,
+  `energy` double DEFAULT NULL,
+  `poblation` double DEFAULT NULL,
+  `poblationLn` double DEFAULT NULL,
+  `idCodon` bigint zerofill DEFAULT NULL,
+  `idOrganismPoblation` bigint zerofill DEFAULT NULL,
+  PRIMARY KEY (`idCalculatedCodonPoblation`)
+) ENGINE=Aria DEFAULT CHARSET=latin1;
+
+CREATE INDEX idx_CalculatedCodonsPoblations_idOrganismPoblation ON CalculatedCodonsPoblations (idOrganismPoblation);
+
+# Volcado de tabla Codons
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `Codons`;
+
+CREATE TABLE `Codons` (
+  `idCodon` bigint zerofill NOT NULL AUTO_INCREMENT,
+  `aminoacidFullName` varchar(100) DEFAULT NULL,
+  `aminoacidLetter` varchar(1) DEFAULT NULL,
+  `aminoacidShotName` varchar(3) DEFAULT NULL,
+  `name` varchar(3) DEFAULT NULL,
+  PRIMARY KEY (`idCodon`)
+) ENGINE=Aria DEFAULT CHARSET=latin1;
+
+# Volcado de tabla ExperimentalCodonsPoblations
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `ExperimentalCodonsPoblations`;
+
+CREATE TABLE `ExperimentalCodonsPoblations` (
+  `idExperimentalCodonPoblation` bigint zerofill NOT NULL AUTO_INCREMENT,
+  `poblation` double DEFAULT NULL,
+  `poblationLn` double DEFAULT NULL,
+  `idCodon` bigint zerofill DEFAULT NULL,
+  `idOrganism` bigint zerofill DEFAULT NULL,
+  PRIMARY KEY (`idExperimentalCodonPoblation`)
+) ENGINE=Aria DEFAULT CHARSET=latin1;
+
+# Volcado de tabla Global
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `Global`;
+
+CREATE TABLE `Global` (
+  `idGlobal` bigint zerofill NOT NULL AUTO_INCREMENT,
+  `bestPearsonCoefficient` double DEFAULT NULL,
+  `lastUpdate` datetime DEFAULT NULL,
+  `lastRunOk` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idGlobal`)
+) ENGINE=Aria DEFAULT CHARSET=latin1;
+
+# Volcado de tabla Organisms
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `Organisms`;
+
+CREATE TABLE `Organisms` (
+  `idOrganism` bigint zerofill NOT NULL ,
+  `bestPearson` double DEFAULT NULL,
+  `lastUpdate` datetime DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `porcGC` double DEFAULT NULL,
+  PRIMARY KEY (`idOrganism`)
+) ENGINE=Aria DEFAULT CHARSET=latin1;
+
+# Volcado de tabla OrganismsPoblations
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `OrganismsPoblations`;
+
+CREATE TABLE `OrganismsPoblations` (
+  `idOrganismPoblation` bigint zerofill NOT NULL,
+  `gamma` double DEFAULT NULL,
+  `idTransition` bigint zerofill DEFAULT NULL,
+  `lastUpdate` datetime DEFAULT NULL,
+  `pearsonCoefficient` double DEFAULT NULL,
+  `idOrganism` bigint zerofill DEFAULT NULL,
+  PRIMARY KEY (`idOrganismPoblation`)
+) ENGINE=Aria DEFAULT CHARSET=latin1;
+
+CREATE INDEX idx_OrganismsPoblations_idOrganism ON OrganismsPoblations (idOrganism);
+CREATE INDEX idx_OrganismsPoblations_idOrganism_Gamma ON OrganismsPoblations (idOrganism, Gamma);
+
 /* INSERTO LAS CONFIGURACIONES */
-INSERT INTO AppConfiguration (clave, valor) VALUES ('process.gammas', '0.00001,0.00003,0.0001,0.0003,0.001,0.003,0.01,0.03,0.1,0.3,1,3,10,30,100,300,1000');
+INSERT INTO AppConfiguration (clave, valor) VALUES ('process.gammas', '100000');
+INSERT INTO AppConfiguration (clave, valor) VALUES ('process.step', '0.002');
+INSERT INTO AppConfiguration (clave, valor) VALUES ('process.tmp.path', '/home/guido');
+INSERT INTO AppConfiguration (clave, valor) VALUES ('statement.flush', '150000');
 
 /* INSERTO TODOS LOS CODONES */
 INSERT INTO Codons (name, aminoacidFullName, aminoacidShotName, aminoacidLetter) VALUES ('CGA', '', '', 'R');
@@ -393,3 +497,6 @@ INSERT INTO ExperimentalCodonsPoblations (idOrganism, idCodon, poblation, poblat
 INSERT INTO ExperimentalCodonsPoblations (idOrganism, idCodon, poblation, poblationLn) VALUES (5,59,0.00103,-6.87651);
 INSERT INTO ExperimentalCodonsPoblations (idOrganism, idCodon, poblation, poblationLn) VALUES (5,60,0.01660,-4.09808);
 INSERT INTO ExperimentalCodonsPoblations (idOrganism, idCodon, poblation, poblationLn) VALUES (5,61,0.01606,-4.13114);
+
+--Ajusto la forma de buscar por indices
+set optimizer_switch='mrr=on'

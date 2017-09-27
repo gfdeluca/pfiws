@@ -1,56 +1,48 @@
 package ar.com.uade.pfi.dao.dbo.entities;
 
 import java.util.Date;
+import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import org.bson.types.ObjectId;
 
-@Entity
-@Table(name = "Organisms")
 public class OrganismEntity {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "idOrganism")
-	Long idOrganism;
-
-	@Column(name = "name", length = 255)
+	ObjectId id;
 	String name;
-
-	@Column(name = "porcGC", length = 13, precision = 12)
 	Double porcGC;
-
-//	@OneToOne
-//	@JoinColumn(name = "bestFitPoblation", referencedColumnName = "idOrganismPoblation", nullable = true)
-//	OrganismPoblationEntity bestFitPoblation;
-	@Column(name = "bestPearson", length = 6, precision = 5)
 	Double bestPearson;
-
-	@Column(name = "lastUpdate")
-	@Temporal(TemporalType.TIMESTAMP)
 	Date lastUpdate;
+	List<ExperimentalCodonPoblationEntity> experimentalValues;
+	List<OrganismPoblationEntity> poblation;
 	
 	public OrganismEntity() {}
-	
-	public OrganismEntity(Long idOrganism, String name, Double porcGC, Double bestPearson, Date lastUpdate) {
-		this.idOrganism = idOrganism;
+
+	public OrganismEntity(ObjectId idOrganism, String name, Double porcGC, Double bestPearson, Date lastUpdate,
+			List<ExperimentalCodonPoblationEntity> experimentalValues) {
+		this.id = idOrganism;
 		this.name = name;
 		this.porcGC = porcGC;
 		this.bestPearson = bestPearson;
 		this.lastUpdate = lastUpdate;
+		this.experimentalValues = experimentalValues;
+	}
+	
+	public OrganismEntity(ObjectId idOrganism, String name, Double porcGC, Double bestPearson, Date lastUpdate,
+			List<ExperimentalCodonPoblationEntity> experimentalValues, List<OrganismPoblationEntity> poblation) {
+		this.id = idOrganism;
+		this.name = name;
+		this.porcGC = porcGC;
+		this.bestPearson = bestPearson;
+		this.lastUpdate = lastUpdate;
+		this.experimentalValues = experimentalValues;
+		this.poblation = poblation;
 	}
 
-	public Long getIdOrganism() {
-		return idOrganism;
+	public ObjectId getId() {
+		return id;
 	}
 
-	public void setIdOrganism(Long idOrganism) {
-		this.idOrganism = idOrganism;
+	public void setId(ObjectId idOrganism) {
+		this.id= idOrganism;
 	}
 
 	public String getName() {
@@ -84,4 +76,22 @@ public class OrganismEntity {
 	public void setLastUpdate(Date lastUpdate) {
 		this.lastUpdate = lastUpdate;
 	}
+
+	public List<ExperimentalCodonPoblationEntity> getExperimentalValues() {
+		return experimentalValues;
+	}
+
+	public void setExperimentalValues(List<ExperimentalCodonPoblationEntity> experimentalValues) {
+		this.experimentalValues = experimentalValues;
+	}
+
+	public List<OrganismPoblationEntity> getPoblation() {
+		return poblation;
+	}
+
+	public void setPoblation(List<OrganismPoblationEntity> poblation) {
+		this.poblation = poblation;
+	}
+
+	
 }

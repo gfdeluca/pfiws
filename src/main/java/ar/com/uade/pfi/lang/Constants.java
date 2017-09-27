@@ -21,4 +21,7 @@ public class Constants {
 	
 	public static double defaultLagrangeMultiplier = 0.01;
 	public static int defaultMatrixSize = 61;
+	
+	public static int resultQuantity = 350;
+	public static double incrementReference = 0.00001;
 }

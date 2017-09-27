@@ -1,5 +1,6 @@
 package ar.com.uade.pfi.rest;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -12,10 +13,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import ar.com.uade.pfi.dao.AppConfigurationDao;
-import ar.com.uade.pfi.dao.dbo.DBManager;
+import ar.com.uade.pfi.dao.OrganismDao;
 import ar.com.uade.pfi.dao.dbo.entities.AppConfigurationEntity;
 import ar.com.uade.pfi.dao.dbo.entities.OrganismEntity;
-import ar.com.uade.pfi.dao.dbo.entities.OrganismPoblationEntity;
 import ar.com.uade.pfi.manager.ProcessingManager;
 import ar.com.uade.pfi.model.service.ResponseServiceModel;
 import ar.com.uade.pfi.utils.ArrayUtils;
@@ -36,10 +36,17 @@ public class GetOrganismsPoblationsRestService {
         }
         
         Map<String, Object> response = new HashMap<String, Object>();
-        AppConfigurationEntity appConfGammas = AppConfigurationDao.get("process.gammas");
+        AppConfigurationEntity appConfGammas = null;
+        List<OrganismEntity> oes = null;
+		try {
+			appConfGammas = AppConfigurationDao.get("process.gammas");
+			oes = OrganismDao.getAll();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         List<Double> gammas = ArrayUtils.arrayOFStringToDouble(appConfGammas.getValor().split(","));
         
-        List<OrganismEntity> oes = DBManager.getInstance().getAll(OrganismEntity.class);
         
         //Inicializo el arreglo
         Map<String, TreeMap<Double, Double>> gammaPearsonByOrganism = new HashMap<String, TreeMap<Double,Double>>();
@@ -56,13 +63,13 @@ public class GetOrganismsPoblationsRestService {
         }
         
         //Pongo los valores de gamma y pearson en el array, ademas busco el mejor gamma a traves del R de Pearson
-        List<OrganismPoblationEntity> opes = DBManager.getInstance().getAll(OrganismPoblationEntity.class);
-        for (Iterator<OrganismPoblationEntity> itOpes = opes.iterator(); itOpes.hasNext();) {
-			OrganismPoblationEntity ope = itOpes.next();
+//        List<OrganismPoblationFilter> opes = OrganismPoblationDao.getAll();
+        
+//        for (Iterator<OrganismPoblationFilter> itOpes = opes.iterator(); itOpes.hasNext();) {
+//			OrganismPoblationEntity ope = itOpes.next();
 			
-			gammaPearsonByOrganism.get(ope.getIdOrganim().getName()).put(ope.getGamma(), ope.getPearsonCoefficient());
-//			gammaPearsonByOrganism.get(ope.getIdOrganim().getName()).put(ope.getGamma(), Math.abs(ope.getPearsonCoefficient()));
-		}
+//			gammaPearsonByOrganism.get(ope.getIdOrganim().getName()).put(ope.getGamma(), ope.getPearsonCoefficient());
+//		}
         
         response.put("OrganismsPoblations", gammaPearsonByOrganism);
         response.put("gammas", gammas);

@@ -1,18 +1,7 @@
 package ar.com.uade.pfi.dao.dbo.entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-@Entity
-@Table(name = "AppConfiguration")
 public class AppConfigurationEntity {
-	@Id
-	@Column(name = "clave")
 	String clave;
-
-	@Column(name = "valor")
 	String valor;
 
 	public AppConfigurationEntity(String id, String valor) {

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+  	<Appenders>  	
+<!--     	<File name="Process" fileName="/Users/Guido/Documents/Logs/process.log" append="true"> -->
+		<File name="Process" fileName="/opt/tomcat7/webapps/pfiWs/logs/process.log" append="true">
+<!-- 		<File name="Process" fileName="C:\Users\A276171\Dropbox\UADE\2016\1°Cuatrimestre\PFI\pfiws\logs\process.log" append="true"> -->
+	      	<PatternLayout>
+	        	<Pattern>%d %m%n</Pattern>
+	      	</PatternLayout>
+    	</File>
+<!--     	<File name="App" fileName="/Users/Guido/Documents/Logs/app.log" append="true"> -->
+		<File name="App" fileName="/opt/tomcat7/webapps/pfiWs/logs/app.log" append="true">
+<!-- 		<File name="App" fileName="C:\Users\A276171\Dropbox\UADE\2016\1°Cuatrimestre\PFI\pfiws\logs\app.log" append="true"> -->
+	      	<PatternLayout>
+	        	<Pattern>%d %m%n</Pattern>
+	      	</PatternLayout>
+    	</File>
+    	<Console name="STDOUT" target="SYSTEM_OUT">
+	      <PatternLayout pattern="%d %m%n"/>
+	    </Console>
+  	</Appenders>
+  	<Loggers>
+  		<Logger name="ar.com.uade.pfi.manager.ProcessingManagerV2" level="INFO">
+			<AppenderRef ref="Process"/> 
+  		</Logger>
+		<Root level="all">
+			<AppenderRef ref="STDOUT"/>
+      		<AppenderRef ref="App"/>
+    	</Root>
+  	</Loggers>
+</Configuration>

@@ -8,7 +8,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import ar.com.uade.pfi.manager.ProcessingManager;
+import ar.com.uade.pfi.manager.ProcessingManagerV2;
 import ar.com.uade.pfi.model.experimet.StatusServiceModel;
 import ar.com.uade.pfi.model.service.ResponseServiceModel;
 
@@ -21,7 +21,7 @@ public class StatusRestService {
     public ResponseServiceModel getStatus() {
     	ResponseServiceModel rsm = new ResponseServiceModel();
         
-    	StatusServiceModel ssm = ProcessingManager.getInstance().getStatus();
+    	StatusServiceModel ssm = ProcessingManagerV2.getInstance().getStatus();
     	rsm.setRes(ssm.isLock()?1:0);
     	Map<String, Integer> response = new HashMap<String, Integer>();
     	response.put("progress", ssm.getProgress());
